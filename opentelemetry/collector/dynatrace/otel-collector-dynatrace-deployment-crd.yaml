@@ -127,7 +127,7 @@ spec:
           level: "info"
         metrics:
           level: "detailed"
-          address: $MY_POD_IP:8888
+          address: ${env:MY_POD_IP}:8888
       pipelines:
         metrics:
           receivers: [prometheus,otlp]
