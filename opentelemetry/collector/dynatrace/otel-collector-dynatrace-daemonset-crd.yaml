@@ -10,6 +10,19 @@ spec:
       name: dynatrace-otelcol-dt-api-credentials
   mode: "daemonset"
   image: "ghcr.io/dynatrace/dynatrace-otel-collector/dynatrace-otel-collector:latest"
+  # podAnnotations:
+      # metrics.dynatrace.com/scrape: 'true'
+      # metrics.dynatrace.com/port: '8888'
+  env:
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: status.podIP
+    - name: K8S_NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
   observability:
     metrics:
       enableMetrics: true
@@ -34,6 +47,14 @@ spec:
   # 
   config: |
     receivers:
+      prometheus:
+        config:
+          scrape_configs:
+          - job_name: opentelemetry-collector
+            scrape_interval: 30s
+            static_configs:
+            - targets:
+              - ${MY_POD_IP}:8888
       filelog:
         include:
           # Include only astronomy-shop namespace logs
@@ -127,6 +148,11 @@ spec:
         send_batch_max_size: 1000
         timeout: 30s
         send_batch_size: 800
+      memory_limiter:
+        check_interval: 1s
+        limit_percentage: 70
+        spike_limit_percentage: 30
+      cumulativetodelta: {}
       resource:
         attributes:
         - key: k8s.pod.ip
@@ -198,8 +224,13 @@ spec:
           level: "info"
         metrics:
           level: "detailed"
+          address: $MY_POD_IP:8888
       pipelines:
+        metrics:
+          receivers: [prometheus]
+          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource,cumulativetodelta,batch]
+          exporters: [otlphttp/dynatrace,debug]
         logs:
           receivers: [filelog]
-          processors: [resourcedetection/gcp,resource,k8sattributes,batch]
+          processors: [memory_limiter,resourcedetection/gcp,resource,k8sattributes,batch]
           exporters: [otlphttp/dynatrace,debug]

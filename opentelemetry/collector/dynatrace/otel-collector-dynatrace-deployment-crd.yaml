@@ -13,6 +13,16 @@ spec:
   # podAnnotations:
       # metrics.dynatrace.com/scrape: 'true'
       # metrics.dynatrace.com/port: '8888'
+  env:
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: status.podIP
+    - name: K8S_NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
   observability:
     metrics:
       enableMetrics: true
@@ -21,6 +31,14 @@ spec:
       memory: 512Mi
   config: |
     receivers:
+      prometheus:
+        config:
+          scrape_configs:
+          - job_name: opentelemetry-collector
+            scrape_interval: 30s
+            static_configs:
+            - targets:
+              - ${MY_POD_IP}:8888
       otlp:
         protocols:
           grpc:
@@ -33,6 +51,11 @@ spec:
         send_batch_max_size: 1000
         timeout: 30s
         send_batch_size: 800
+      memory_limiter:
+        check_interval: 1s
+        limit_percentage: 70
+        spike_limit_percentage: 30
+      cumulativetodelta: {}
       k8sattributes:
         auth_type: "serviceAccount"
         passthrough: false
@@ -104,16 +127,17 @@ spec:
           level: "info"
         metrics:
           level: "detailed"
+          address: $MY_POD_IP:8888
       pipelines:
         metrics:
-          receivers: [otlp]
-          processors: [k8sattributes,resourcedetection/gcp,resource,batch]
+          receivers: [prometheus,otlp]
+          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource,cumulativetodelta,batch]
           exporters: [otlphttp/dynatrace,debug]
         traces:
           receivers: [otlp]
-          processors: [k8sattributes,resourcedetection/gcp,resource,batch]
+          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource,batch]
           exporters: [otlphttp/dynatrace,debug]
         logs:
           receivers: [otlp]
-          processors: [k8sattributes,resourcedetection/gcp,resource,batch]
+          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource,batch]
           exporters: [otlphttp/dynatrace,debug]
