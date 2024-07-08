@@ -141,13 +141,13 @@ spec:
       pipelines:
         metrics:
           receivers: [prometheus,otlp,k8s_cluster]
-          processors: [memorylimiter,k8sattributes,resourcedetection/gcp,resource,batch]
+          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource,batch]
           exporters: [otlphttp/dynatrace,debug]
         traces:
           receivers: [otlp]
-          processors: [memorylimiter,k8sattributes,resourcedetection/gcp,resource,batch]
+          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource,batch]
           exporters: [otlphttp/dynatrace,debug]
         logs:
           receivers: [otlp,k8sobjects/events]
-          processors: [memorylimiter,k8sattributes,resourcedetection/gcp,resource,batch]
+          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource,batch]
           exporters: [otlphttp/dynatrace,debug]
