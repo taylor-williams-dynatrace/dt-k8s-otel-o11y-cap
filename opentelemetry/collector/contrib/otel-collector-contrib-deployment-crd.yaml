@@ -66,6 +66,7 @@ spec:
         check_interval: 1s
         limit_percentage: 70
         spike_limit_percentage: 30
+      cumulativetodelta:
       k8sattributes:
         auth_type: "serviceAccount"
         passthrough: false
@@ -141,7 +142,7 @@ spec:
       pipelines:
         metrics:
           receivers: [prometheus,otlp,k8s_cluster]
-          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource,batch]
+          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource,cumulativetodelta,batch]
           exporters: [otlphttp/dynatrace,debug]
         traces:
           receivers: [otlp]
