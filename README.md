@@ -237,7 +237,7 @@ kubectl get pods -n dynatrace
 Sample output:
 | NAME                                       | READY | STATUS  | RESTARTS | AGE |
 |--------------------------------------------|-------|---------|----------|-----|
-| dynatrace-deployment-collector-559d5b9d77-ms24p | 1/1   | Running | 0        | 1m  |
+| dynatrace-deployment-collector-796546fbd6-kqflf | 1/1   | Running | 0        | 1m  |
 
 ### OpenTelemetry Collector - Dynatrace Distro (Daemonset)
 https://docs.dynatrace.com/docs/extend-dynatrace/opentelemetry/collector/deployment
@@ -275,7 +275,7 @@ kubectl get pods -n dynatrace
 Sample output:
 | NAME                                       | READY | STATUS  | RESTARTS | AGE |
 |--------------------------------------------|-------|---------|----------|-----|
-| dynatrace-deployment-collector-559d5b9d77-ms24p | 1/1   | Running | 0        | 1m  |
+| dynatrace-daemonset-collector-h69pz | 1/1   | Running | 0        | 1m  |
 
 ### OpenTelemetry Collector - Contrib Distro (Deployment)
 https://docs.dynatrace.com/docs/extend-dynatrace/opentelemetry/collector/deployment
@@ -313,7 +313,7 @@ kubectl get pods -n dynatrace
 Sample output:
 | NAME                                       | READY | STATUS  | RESTARTS | AGE |
 |--------------------------------------------|-------|---------|----------|-----|
-| dynatrace-deployment-collector-559d5b9d77-ms24p | 1/1   | Running | 0        | 1m  |
+| contrib-deployment-collector-74dfc4d9f4-s97k6 | 1/1   | Running | 0        | 1m  |
 
 ### OpenTelemetry Collector - Contrib Distro (Daemonset)
 https://docs.dynatrace.com/docs/extend-dynatrace/opentelemetry/collector/deployment
@@ -351,7 +351,7 @@ kubectl get pods -n dynatrace
 Sample output:
 | NAME                                       | READY | STATUS  | RESTARTS | AGE |
 |--------------------------------------------|-------|---------|----------|-----|
-| dynatrace-deployment-collector-559d5b9d77-ms24p | 1/1   | Running | 0        | 1m  |
+| contrib-daemonset-collector-d92tw | 1/1   | Running | 0        | 1m  |
 
 ### Export OpenTelemetry data from `astronomy-shop` to OpenTelemetry Collector - Dynatrace Distro (Deployment)
 
