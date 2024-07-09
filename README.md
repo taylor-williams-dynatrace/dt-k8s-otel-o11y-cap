@@ -86,11 +86,11 @@ Ingest OpenTelemetry traces
 ![dt access token](img/dt_access_token.png)
 
 #### (optional) Import Dashboards into Dynatrace
-![collector health dashboard](/img/dt_collector_health_dashboard.png)
-[collector health dashboard](/OpenTelemetry_Collector_[IsItObservable]_dt_dashboard.json)
-
 ![astronomy-shop dashboard](/img/dt_astronomy_shop_dashboard.png)
 [astronomy-shop dashboard](/dt-k8s-otel-o11y-cap_dt_dashboard.json)
+
+![collector health dashboard](/img/dt_collector_health_dashboard.png)
+[collector health dashboard](/OpenTelemetry_Collector_[IsItObservable]_dt_dashboard.json)
 
 #### Define workshop user variables
 In your GCP CloudShell Terminal:
@@ -257,7 +257,17 @@ Sample output:
 ### OpenTelemetry Collector - Dynatrace Distro (Daemonset)
 https://docs.dynatrace.com/docs/extend-dynatrace/opentelemetry/collector/deployment
 
-TODO - list modules
+Receivers:
+`filelog`, `prometheus`
+
+| MODULE        | DT DEPLOY | DT DAEMON | CON DEPLOY | CON DAEMON |
+|---------------|-----------|-----------|------------|------------|
+| otlp          | - [x]     | - [ ]     | - [x]      | - [ ]      |
+| prometheus    | - [x]     | - [x]     | - [x]      | - [x]      |
+| filelog       | - [ ]     | - [x]     | - [ ]      | - [ ]      |
+| kubeletstats  | - [ ]     | - [ ]     | - [ ]      | - [x]      |
+| k8s_cluster   | - [ ]     | - [ ]     | - [x]      | - [ ]      |
+| k8sobjects    | - [ ]     | - [ ]     | - [x]      | - [ ]      |
 
 #### Deploy OpenTelemetry Collector CRD
 https://docs.dynatrace.com/docs/extend-dynatrace/opentelemetry/collector/deployment#tabgroup--dynatrace-docs--agent
@@ -295,7 +305,17 @@ Sample output:
 ### OpenTelemetry Collector - Contrib Distro (Deployment)
 https://docs.dynatrace.com/docs/extend-dynatrace/opentelemetry/collector/deployment
 
-TODO - list modules
+Receivers:
+`otlp`, `prometheus`, `k8s_cluster`, `k8sobjects`
+
+| MODULE        | DT DEPLOY | DT DAEMON | CON DEPLOY | CON DAEMON |
+|---------------|-----------|-----------|------------|------------|
+| otlp          | - [x]     | - [ ]     | - [x]      | - [ ]      |
+| prometheus    | - [x]     | - [x]     | - [x]      | - [x]      |
+| filelog       | - [ ]     | - [x]     | - [ ]      | - [ ]      |
+| kubeletstats  | - [ ]     | - [ ]     | - [ ]      | - [x]      |
+| k8s_cluster   | - [ ]     | - [ ]     | - [x]      | - [ ]      |
+| k8sobjects    | - [ ]     | - [ ]     | - [x]      | - [ ]      |
 
 #### Deploy OpenTelemetry Collector CRD
 https://opentelemetry.io/docs/kubernetes/operator/
@@ -333,7 +353,17 @@ Sample output:
 ### OpenTelemetry Collector - Contrib Distro (Daemonset)
 https://docs.dynatrace.com/docs/extend-dynatrace/opentelemetry/collector/deployment
 
-TODO - list modules
+Receivers:
+`prometheus`, `kubeletstats`
+
+| MODULE        | DT DEPLOY | DT DAEMON | CON DEPLOY | CON DAEMON |
+|---------------|-----------|-----------|------------|------------|
+| otlp          | - [x]     | - [ ]     | - [x]      | - [ ]      |
+| prometheus    | - [x]     | - [x]     | - [x]      | - [x]      |
+| filelog       | - [ ]     | - [x]     | - [ ]      | - [ ]      |
+| kubeletstats  | - [ ]     | - [ ]     | - [ ]      | - [x]      |
+| k8s_cluster   | - [ ]     | - [ ]     | - [x]      | - [ ]      |
+| k8sobjects    | - [ ]     | - [ ]     | - [x]      | - [ ]      |
 
 #### Deploy OpenTelemetry Collector CRD
 https://opentelemetry.io/docs/kubernetes/operator/
@@ -525,6 +555,7 @@ Prometheus metrics from the OpenTelemetry Collector have the `otelcol_` prefix a
 
 Example dashboard for OpenTelemetry Collector health has been created by the `IsItObservable` team:
 ![dt_collector_health_dashboard_short](img/dt_collector_health_dashboard_short.png)
+https://youtu.be/Qxt3XAMJNhA?si=LY_37zRJC8hCTpjX&t=2630
 
 <!-- ------------------------ -->
 ## Demo The New Functionality
