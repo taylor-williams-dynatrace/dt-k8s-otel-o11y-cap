@@ -208,7 +208,18 @@ Sample output:
 ### OpenTelemetry Collector - Dynatrace Distro (Deployment)
 https://docs.dynatrace.com/docs/extend-dynatrace/opentelemetry/collector/deployment
 
-TODO - list modules
+Receivers:
+`otlp`, `prometheus`
+
+| MODULE        | DT DEPLOY | DT DAEMON | CON DEPLOY | CON DAEMON |
+|---------------|-----------|-----------|------------|------------|
+| otlp          | - [x]     | - [ ]     | - [x]      | - [ ]      |
+| prometheus    | - [x]     | - [x]     | - [x]      | - [x]      |
+| filelog       | - [ ]     | - [x]     | - [ ]      | - [ ]      |
+| kubeletstats  | - [ ]     | - [ ]     | - [ ]      | - [x]      |
+| k8s_cluster   | - [ ]     | - [ ]     | - [x]      | - [ ]      |
+| k8sobjects    | - [ ]     | - [ ]     | - [x]      | - [ ]      |
+
 
 #### Deploy OpenTelemetry Collector CRD
 https://docs.dynatrace.com/docs/extend-dynatrace/opentelemetry/collector/deployment#tabgroup--dynatrace-docs--gateway
