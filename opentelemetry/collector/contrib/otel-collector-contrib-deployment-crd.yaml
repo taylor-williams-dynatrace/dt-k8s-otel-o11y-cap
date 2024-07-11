@@ -92,6 +92,12 @@ spec:
             - tag_name: app.label.component
               key: app.kubernetes.io/component
               from: pod
+            - tag_name: app.label.instance
+              key: app.kubernetes.io/instance
+              from: pod
+            - tag_name: app.label.name
+              key: app.kubernetes.io/name
+              from: pod
         pod_association:
           - sources:
               - from: resource_attribute
