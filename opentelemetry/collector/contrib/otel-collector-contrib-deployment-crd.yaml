@@ -142,8 +142,9 @@ spec:
       telemetry:
         logs:
           level: "info"
+          encoding: "json"
         metrics:
-          level: "detailed"
+          level: "normal"
           address: ${MY_POD_IP}:8888
       pipelines:
         metrics:

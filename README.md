@@ -442,6 +442,7 @@ Sample output:
 [astronomy-shop dashboard](/dt-k8s-otel-o11y-cap_dt_dashboard.json)
 
 ### Observe OpenTelemetry Collector health in Dynatrace
+https://opentelemetry.io/docs/collector/internal-telemetry/
 
 #### Enable OpenTelemetry Collector health metrics (Prometheus)
 Enable metric generation for Collector CRD:
@@ -480,7 +481,7 @@ spec:
     service:
       telemetry:
         metrics:
-          level: "detailed"
+          level: "normal"
           address: ${MY_POD_IP}:8888
 ```
 Enable scraping of metrics from Prometheus endpoint:
