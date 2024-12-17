@@ -110,19 +110,19 @@ spec:
           #      name: k8s.pod.ip
           - sources:
               - from: connection
-      resourcedetection/gcp:
-        # detectors: [env, gcp]
+      resourcedetection/aks:
+        # detectors: [env, aks]
         detectors: [env]
         timeout: 2s
         override: false
-      resource/kind:
-        attributes:
-        - key: cloud.account.id
-          value: dt-k8s-o11y-account
-          action: insert
-        - key: k8s.cluster.name
-          value: dt-k8s-o11y-kind
-          action: insert
+      # resource/kind:
+      #  attributes:
+      #  - key: cloud.account.id
+      #    value: dt-k8s-o11y-account
+      #    action: insert
+      #  - key: k8s.cluster.name
+      #    value: dt-k8s-o11y-kind
+      #    action: insert
       resource:
         attributes:
         - key: k8s.pod.ip
@@ -158,13 +158,13 @@ spec:
       pipelines:
         metrics:
           receivers: [prometheus,otlp,k8s_cluster]
-          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource/kind,resource,cumulativetodelta,batch]
+          processors: [memory_limiter,k8sattributes,resourcedetection/aks,resource,cumulativetodelta,batch]
           exporters: [otlphttp/dynatrace,debug]
         traces:
           receivers: [otlp]
-          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource/kind,resource,batch]
+          processors: [memory_limiter,k8sattributes,resourcedetection/aks,resource,batch]
           exporters: [otlphttp/dynatrace,debug]
         logs:
           receivers: [otlp,k8sobjects/events]
-          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource/kind,resource,batch]
+          processors: [memory_limiter,k8sattributes,resourcedetection/aks,resource,batch]
           exporters: [otlphttp/dynatrace,debug]
