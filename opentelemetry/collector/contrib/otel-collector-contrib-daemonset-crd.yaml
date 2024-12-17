@@ -107,8 +107,8 @@ spec:
           #      name: k8s.pod.ip
           - sources:
               - from: connection
-      resourcedetection/gcp:
-        detectors: [env, gcp]
+      resourcedetection/aks:
+        detectors: [env, aks]
         timeout: 2s
         override: false
       resource:
@@ -146,5 +146,5 @@ spec:
       pipelines:
         metrics:
           receivers: [prometheus,kubeletstats]
-          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource,cumulativetodelta,batch]
+          processors: [memory_limiter,k8sattributes,resourcedetection/aks,resource,cumulativetodelta,batch]
           exporters: [otlphttp/dynatrace,debug]
