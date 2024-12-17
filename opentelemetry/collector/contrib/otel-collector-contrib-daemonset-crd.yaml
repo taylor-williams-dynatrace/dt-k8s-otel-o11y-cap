@@ -109,7 +109,7 @@ spec:
               - from: connection
       resourcedetection/aks:
         # detectors: [env, aks]
-        detectors: [env]
+        detectors: [aks]
         timeout: 2s
         override: false
         aks:
