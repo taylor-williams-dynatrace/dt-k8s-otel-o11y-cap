@@ -112,9 +112,13 @@ spec:
               - from: connection
       resourcedetection/aks:
         # detectors: [env, aks]
-        detectors: [env]
+        detectors: [aks]
         timeout: 2s
         override: false
+        aks:
+          resource_attributes:
+            k8s.cluster.name:
+              enabled: true
       # resource/kind:
       #  attributes:
       #  - key: cloud.account.id
