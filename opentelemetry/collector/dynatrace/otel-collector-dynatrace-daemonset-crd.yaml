@@ -166,8 +166,8 @@ spec:
         - key: dt.security_context
           from_attribute: k8s.cluster.name
           action: insert
-      resourcedetection/gcp:
-        detectors: [env, gcp]
+      resourcedetection/aks:
+        detectors: [env, aks]
         timeout: 2s
         override: false
       k8sattributes:
@@ -235,9 +235,9 @@ spec:
       pipelines:
         metrics:
           receivers: [prometheus]
-          processors: [memory_limiter,k8sattributes,resourcedetection/gcp,resource,cumulativetodelta,batch]
+          processors: [memory_limiter,k8sattributes,resourcedetection/aks,resource,cumulativetodelta,batch]
           exporters: [otlphttp/dynatrace,debug]
         logs:
           receivers: [filelog]
-          processors: [memory_limiter,resourcedetection/gcp,resource,k8sattributes,batch]
+          processors: [memory_limiter,resourcedetection/aks,resource,k8sattributes,batch]
           exporters: [otlphttp/dynatrace,debug]
