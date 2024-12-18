@@ -10,9 +10,6 @@ spec:
       name: dynatrace-otelcol-dt-api-credentials
   mode: "deployment"
   image: "otel/opentelemetry-collector-contrib:0.103.0"
-  # podAnnotations:
-      # metrics.dynatrace.com/scrape: 'true'
-      # metrics.dynatrace.com/port: '8888'
   env:
     - name: MY_POD_IP
       valueFrom:
@@ -70,8 +67,6 @@ spec:
       k8sattributes:
         auth_type: "serviceAccount"
         passthrough: false
-        # filter:
-        #  node_from_env_var: KUBE_NODE_NAME
         extract:
           metadata:
             - k8s.namespace.name
@@ -105,28 +100,17 @@ spec:
           - sources:
               - from: resource_attribute
                 name: k8s.pod.name
-          #- sources:
-          #    - from: resource_attribute
-          #      name: k8s.pod.ip
           - sources:
               - from: connection
-      resourcedetection/aks:
-        # detectors: [env, aks]
-        detectors: [aks]
+      resourcedetection/eks:
+        # detectors: [env, eks]
+        detectors: [eks]
         timeout: 2s
         override: false
         aks:
           resource_attributes:
             k8s.cluster.name:
               enabled: true
-      # resource/kind:
-      #  attributes:
-      #  - key: cloud.account.id
-      #    value: dt-k8s-o11y-account
-      #    action: insert
-      #  - key: k8s.cluster.name
-      #    value: dt-k8s-o11y-kind
-      #    action: insert
       resource:
         attributes:
         - key: k8s.pod.ip
