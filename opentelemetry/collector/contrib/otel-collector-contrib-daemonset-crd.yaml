@@ -131,6 +131,8 @@ spec:
         verbosity: basic
         sampling_initial: 5
         sampling_thereafter: 20
+      prometheusremotewrite:
+        endpoint: "http://172.203.222.11:8090/telegraf"
 
     service:
       telemetry:
@@ -144,4 +146,4 @@ spec:
         metrics:
           receivers: [prometheus,kubeletstats]
           processors: [memory_limiter,k8sattributes,resourcedetection/eks,resource,cumulativetodelta,batch]
-          exporters: [otlphttp/dynatrace,debug]
+          exporters: [otlphttp/dynatrace,debug,prometheusremotewrite]
